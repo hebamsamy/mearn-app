@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../../Services/Api.service';
-import { IProduct } from '../../DataTypes/product';
+import { ApiService } from '../../../Services/Api.service';
+import { IProduct } from '../../../DataTypes/product';
 import { Router } from '@angular/router';
+import { ICategory } from '../../../DataTypes/category';
 
 @Component({
   selector: 'app-add-product',
@@ -12,27 +13,26 @@ import { Router } from '@angular/router';
 export class AddProductComponent {
   form: FormGroup;
   data: FormData;
-  constructor(private builder: FormBuilder, private apiServ: ApiService,private router:Router) {
+  selectImg:boolean=false;
+  categories: ICategory[] = [];
+  constructor(private builder: FormBuilder, private apiServ: ApiService, private router: Router) {
     this.data = new FormData()
-
+    this.apiServ.GetAllCategories().subscribe(res => {
+      this.categories = res.data
+    })
     ///get one
     this.form = this.builder.group({
       name: this.builder.control("", [Validators.required, Validators.minLength(3)]),
       price: ["", [Validators.required, Validators.min(10)]],
       quantity: ["", [Validators.required, Validators.min(1)]],
       colors: this.builder.array([
-        this.builder.control("#FF0000"),
-        this.builder.control("#0000FF")
+        this.builder.control("#000000"),
       ]),
-      // imgURL:["",[Validators.required]],
-      categoryName: ["test"],
-      categoryID: ["1"],
+      categoryID: ["",[Validators.required]],
       description: ["", [Validators.required, Validators.minLength(10)]],
-
     })
 
   }
-  //form.controls["colors"].controls
   get colorArray() {
     return this.form.controls["colors"] as FormArray
   }
@@ -43,11 +43,10 @@ export class AddProductComponent {
     this.colorArray.removeAt(ind)
   }
   chooseImage(imginput: any) {
-    this.data.append("imgURL", imginput.files[0])
+    this.data.append("imgURL", imginput.files[0]);
+    this.selectImg = true;
   }
   send() {
-    console.log("send");
-    console.log(this.form.value);
     //call api
     for (const key in this.form.controls) {
       this.data.append(key, this.form.controls[key].value)
@@ -55,13 +54,13 @@ export class AddProductComponent {
     this.apiServ.AddProduct(this.data).subscribe({
       next: (responce) => {
         console.log(responce);
-        if(responce.success){
+        if (responce.success) {
           alert(responce.message)
           this.form.reset();
-          this.data = new FormData()
+          this.data = new FormData();
           // this.router.navigateByUrl("/products")
         }
-        else{
+        else {
           alert(responce.message)
         }
 

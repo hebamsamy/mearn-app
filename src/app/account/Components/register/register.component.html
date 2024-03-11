@@ -1,21 +1,134 @@
-<!-- <form (ngSubmit)="Send()"> -->
-    <div class="mb-3">
-        <label class="form-label">Name</label>
-        <input type="text" class="form-control" [(ngModel)]="user.name">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Phone Number</label>
-        <input type="text" class="form-control"  [(ngModel)]="user.phoneNumber">
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Email address</label>
-        <input type="email" class="form-control"  [(ngModel)]="user.email">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control"  [(ngModel)]="user.password">
-    </div>
-
-    <button type="button" (click)="Send()" class="btn btn-primary">Submit</button>
-<!-- </form> -->
+<main class="main-content mt-0">
+    <section class="min-vh-100 mb-8">
+        <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
+            style="background-image: url('../../../../assets/curved14.jpg');">
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 text-center mx-auto">
+                        <h1 class="text-white mb-2 mt-5">Welcome!</h1>
+                        <p class="text-lead text-white">
+                            Join Use to see our awesome Products <br> We will make your Online Shopping experince Priceless and Enjoyable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mt-lg-n10 mt-md-n11 mt-n10">
+                <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+                    <div class="card z-index-0">
+                        <div class="card-body">
+                            <form role="form text-left" [formGroup]="form" (ngSubmit)="Send()">
+                                <label>User Name</label>
+                                <div class="mb-3">
+                                    <input type="text" formControlName="name" class="form-control" aria-label="Name"
+                                        aria-describedby="email-addon" [ngClass]="{
+                                            'is-invalid': form.controls['name'].invalid && form.controls['name'].touched,
+                                            'is-valid': form.controls['name'].valid && form.controls['name'].touched,
+                                            }">
+                                    <div *ngIf="form.controls['name'].invalid && form.controls['name'].touched"
+                                        class="invalid-feedback">
+                                        <span *ngIf="form.controls['name'].hasError('required')">
+                                            Please Provide a correct User name
+                                        </span>
+                                        <span *ngIf="form.controls['name'].hasError('minlength')">
+                                            User name must contain more than 3 letters.
+                                        </span>
+                                    </div>
+                                    <div *ngIf="form.controls['name'].valid && form.controls['name'].touched"
+                                        class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <label>Email Address</label>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" aria-label="Email"
+                                        aria-describedby="email-addon" formControlName="email" [ngClass]="{
+                                            'is-invalid': form.controls['email'].invalid && form.controls['email'].touched,
+                                            'is-valid': form.controls['email'].valid && form.controls['email'].touched,
+                                            }">
+                                    <div *ngIf="form.controls['email'].invalid && form.controls['email'].touched"
+                                        class="invalid-feedback">
+                                        <span
+                                            *ngIf="form.controls['email'].hasError('required') || form.controls['email'].hasError('email')">
+                                            Please Provide a correct Email Address
+                                        </span>
+                                    </div>
+                                    <div *ngIf="form.controls['email'].valid && form.controls['email'].touched"
+                                        class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <label>Password</label>
+                                <div class="mb-3">
+                                    <input type="password" class="form-control" aria-label="Password"
+                                        aria-describedby="password-addon" formControlName="password" [ngClass]="{
+                                            'is-invalid': form.controls['password'].invalid && form.controls['password'].touched,
+                                            'is-valid': form.controls['password'].valid && form.controls['password'].touched,
+                                            }">
+                                    <div *ngIf="form.controls['password'].invalid && form.controls['password'].touched"
+                                        class="invalid-feedback">
+                                        <span *ngIf="form.controls['password'].hasError('required')">
+                                            Please Provide a correct Password
+                                        </span>
+                                        <span *ngIf="form.controls['password'].hasError('minlength')">
+                                            Password must contain more than 8 letters it can be: Numbers or Alphabatic
+                                            letters or Special Characters
+                                        </span>
+                                    </div>
+                                    <div *ngIf="form.controls['password'].valid && form.controls['password'].touched"
+                                        class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <label>Phone Number</label>
+                                <div class="mb-3">
+                                    <input type="tel" formControlName="phoneNumber" class="form-control"
+                                        aria-label="Phone" aria-describedby="phoneNumber-addon" [ngClass]="{
+                                                    'is-invalid': form.controls['phoneNumber'].invalid && form.controls['phoneNumber'].touched,
+                                                    'is-valid': form.controls['phoneNumber'].valid && form.controls['phoneNumber'].touched,
+                                                    }">
+                                    <div *ngIf="form.controls['phoneNumber'].invalid && form.controls['phoneNumber'].touched"
+                                        class="invalid-feedback">
+                                        <span *ngIf="form.controls['phoneNumber'].hasError('required')">
+                                            Please Provide a correct Phone Number
+                                        </span>
+                                        <span *ngIf="form.controls['phoneNumber'].hasError('minlength')">
+                                            Phone Number must contain more than 11 letters it can be like 012345678910
+                                        </span>
+                                    </div>
+                                    <div *ngIf="form.controls['phoneNumber'].valid && form.controls['phoneNumber'].touched"
+                                        class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-info text-left">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                        checked>
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms
+                                            and Conditions</a>
+                                    </label>
+                                </div>
+                                <!-- <div class="mb-3">
+                                    <label class="form-label">Role</label>
+                                    <select class="form-control" formControlName="role">
+                                        <option selected value="user">User</option>
+                                        <option value="vendor">Vendor</option>
+                                    </select>
+                                </div> -->
+                                <div class="text-center">
+                                    <button type="submit" [disabled]="form.invalid"
+                                        class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                                </div>
+                                <p class="text-sm mt-3 mb-0">Already have an account? <a
+                                        [routerLink]="['/account/login','/home']"
+                                        class="text-dark text-xl font-weight-bolder">Sign in</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

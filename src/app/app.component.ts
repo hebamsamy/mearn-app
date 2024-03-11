@@ -4,6 +4,7 @@ import { Product } from './DataTypes/product';
 import { ProductListService } from './Services/product-list.service';
 import { MoneyPipe } from './pipes/money.pipe';
 import { LoaderService } from './Services/loader.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,9 @@ import { LoaderService } from './Services/loader.service';
 })
 export class AppComponent {
   title = 'mearn-app';
-  toLoad=false
+  toLoad: BehaviorSubject<boolean>;
   constructor(private loaderServ:LoaderService){
-
-this.loaderServ.isLoaded.subscribe(data=>{
-  this.toLoad=data
-})
+    this.toLoad=  this.loaderServ.isLoaded
   }
 
 

@@ -1,20 +1,76 @@
-
 <div class="container">
-<button class="btn btn-outline-primary my-5" routerLink="/add-product">Create Product </button>
-    <div class="row">
-        <div class="card col-4"  *ngFor="let item of list">
-            <div class="card-body">
-            <img [src]="item.imgURL" [alt]="item.name" class="card-img-top" alt="...">
-            <h5 class="card-title">{{item.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Price {{item.price | currency }}</h6>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Available {{item.quantity }}</h6>
-            <button [routerLink]="['/details',item._id]">See More</button>
-            <button [routerLink]="['/edit-product',item._id]">Edit</button>
-            <button class="btn" (click)="addtowishlist(item)">
-                <i style="color: red;" class="bi bi-heart-fill"></i>
-            </button>
-            <!-- <button (click)="add(item)">Add To Cart</button> -->
+    <div class="row g-4 py-5">
+        <div class="col-sm-6 col-md-4 col-lg-3" *ngFor="let item of list">
+            <div class="product-single-card">
+                <div class="product-top-area">
+                    <!-- <div class="product-discount">
+                        10%
+                    </div> -->
+                    <div class="product-img">
+                        <div class="first-view">
+                            <img [src]="item.imgURL" alt="logo" class="img-fluid"
+                                onerror="this.src='../../../assets/placeholder.png'">
+                        </div>
+                        <div class="hover-view">
+                            <img [src]="item.imgURL" alt="logo" class="img-fluid"
+                                onerror="this.src='../../../assets/placeholder.png'">
+                        </div>
+                    </div>
+                    <div class="sideicons">
+                        <button class="sideicons-btn" (click)="addtocartlist(item)">
+                            <i class="text-primary bi bi-cart-plus-fill"></i>
+                        </button>
+                        <button class="sideicons-btn" (click)="addtowishlist(item)">
+                            <i class="text-danger bi"
+                                [ngClass]="{'bi-heart-fill': checkWishItem(item),'bi-heart-half':!checkWishItem(item)}"></i>
+                        </button>
+                        <button class="sideicons-btn" [routerLink]="['/details',item._id]">
+                            <i class="text-secondary-emphasis bi bi-eye-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h6 class="product-category">
+                        <img [title]="item.categoryID?.description" [alt]="item.categoryID?.name"
+                            [src]="item.categoryID?.imgURL" class="avatar avatar-sm rounded-circle me-2">
+                        {{item.categoryID?.name}}
+                    </h6>
+                    <h6 class="product-title text-truncate">
+                        {{item.name}}
+                    </h6>
+                    <app-rate></app-rate>
+                    <h6 class="product-count text-truncate">
+                        {{item.quantity}} Item Available
+                    </h6>
+                    <div class="d-flex flex-column justify-content-center py-2">
+                        <div class="old-price">
+                            {{item.price|currency}}
+                        </div>
+                        <div class="new-price">
+                            {{item.price|currency}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- <div class="card col-4" *ngFor="let item of list">
+            <div class="card-body">
+                <img [src]="item.imgURL" [alt]="item.name" class="card-img-top" alt="...">
+                <h5 class="card-title">{{item.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Price {{item.price | currency }}</h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Available {{item.quantity }}</h6>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button class="btn" [routerLink]="['/details',item._id]">
+                        <i class="text-info bi bi-eye-fill"></i>
+                    </button>
+                    <button class="btn" (click)="addtowishlist(item)">
+                        <i class="text-danger bi bi-heart-fill"></i>
+                    </button>
+                    <button class="btn" (click)="addtocartlist(item)">
+                        <i class="text-primary bi bi-cart-plus-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </div> -->
     </div>
-</div> 
 </div>

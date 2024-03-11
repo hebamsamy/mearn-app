@@ -1,0 +1,304 @@
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>Checkout form</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 order-md-2 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted position-relative p-2">
+          Your Cart
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">{{list.length}}</span>
+        </span>
+        <button type="button" class="btn btn-primary" routerLink="/cartlist">
+          <i class="bi bi-cart-x-fill"></i>
+          Back To Cart
+        </button>
+      </h4>
+      <ul class="list-group mb-3">
+        <li *ngFor="let item of list" class="list-group-item d-flex justify-content-between lh-condensed">
+          <div class="d-flex justify-content-between align-items-center">
+            <a routerLink="/details/{{item.product._id}}">
+              <img [title]="item.product.description" [alt]="item.product.name" [src]="item.product.imgURL"
+                class="avatar avatar-sm rounded-circle me-2">
+            </a>
+            <div>
+              <h5 class="my-0">{{item.product.name}}</h5>
+              <small class="text-muted">{{item.product.description}}</small>
+            </div>
+          </div>
+          <span class="text-muted lead">{{item.quantity}} X {{item.product.price|currency}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between bg-light">
+          <div class="text-success">
+            <h6 class="my-0">Shipping Cost</h6>
+          </div>
+          <span class="text-success">$10</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <h3>Total</h3>
+          <h4>{{(calcTotal()+10)|currency}}</h4>
+        </li>
+      </ul>
+      <hr class="mb-3">
+      <div class="card p-2">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Promo code">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-secondary">Redeem</button>
+          </div>
+        </div>
+      </div>
+      <hr class="mb-3">
+      <div class="d-flex justify-content-center align-items-center">
+        <button class="btn btn-primary btn-lg btn-block mb-4" type="submit">Make an Order</button>
+      </div>
+    </div>
+    <div class="col-md-6 order-md-1">
+      <div class="accordion" id="accordionFlushExample">
+        <!-- accordion item -->
+        <div class="accordion-item py-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- heading one -->
+            <a href="#" class="accordionbutton" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+              aria-expanded="true" aria-controls="flush-collapseOne">
+              <i class=" bi bi-pin-fill me-2 text-muted"></i>
+              Add delivery address
+            </a>
+            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+              Add a new address</a>
+          </div>
+          <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
+            <div class="mt-5">
+              <div class="row">
+                <div class="col-lg-6 col-12 mb-4">
+                  <!-- form -->
+                  <div class="card card-body p-6">
+                    <address>
+                      <strong>{{currentUser?.email}}</strong>
+                      <div *ngIf="currentAddress != null">
+                        {{currentAddress.country}},
+                        <br>
+                        {{currentAddress.address1}}, {{currentAddress.address2}}
+                      </div>
+                      <p class="mb-0" title="Phone">{{currentUser?.phoneNumber}}</p>
+                    </address>
+                    <span class="text-primary">Default address</span>
+                  </div>
+                </div>
+                <div *ngIf="false" class="col-lg-6 col-12 mb-4">
+                  <!-- input -->
+                  <div class="card card-body p-6">
+                    <div class="form-check mb-4">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="officeRadio">
+                      <label class="form-check-label text-dark" for="officeRadio">Office</label>
+                    </div>
+                    <address>
+                      <strong>Nitu Chauhan</strong>
+                      <br>
+                      3853 Coal Road,
+                      <br>
+                      Tannersville, Pennsylvania, 18372, USA,
+                      <br>
+
+                      <abbr title="Phone">P: 402-776-1106</abbr>
+                    </address>
+                  </div>
+                </div>
+                <div class="mt-2 d-flex justify-content-end">
+                  <a href="#" class="btn btn-secondary ms-2 collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Next
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item py-4">
+          <a href="#" class="accordionbutton collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo">
+            <i class="bi bi-credit-card  me-2 text-muted"></i>
+            Payment Method
+          </a>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="mt-5">
+              <div>
+                <div class="card card-bordered shadow-none mb-2">
+                  <div class="card-body p-6">
+                    <!-- check input -->
+                    <div class="d-flex">
+                      <div class="form-check">
+                        <input class="form-check-input" checked #cash (change)="payCash(cash)" type="radio"
+                          name="flexRadioDefault" id="cashonDelivery">
+                        <label class="form-check-label ms-2" for="cashonDelivery"></label>
+                      </div>
+                      <div>
+                        <!-- title -->
+                        <h5 class="mb-1 h6">Cash on Delivery</h5>
+                        <p class="mb-0 small">Pay with cash when your order is delivered.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-bordered shadow-none mb-2">
+                  <div class="card-body p-6">
+                    <div class="d-flex mb-4">
+                      <div class="form-check">
+                        <input #creditcard (change)="payCreditCard(creditcard)" class="form-check-input" type="radio"
+                          name="flexRadioDefault" id="creditdebitcard">
+                        <label class="form-check-label ms-2" for="creditdebitcard"></label>
+                      </div>
+                      <div>
+                        <h5 class="mb-1 h6">Credit / Debit Card</h5>
+                        <p class="mb-0 small">Safe money transfer using your bank accou k
+                          account. We support Mastercard tercard, Visa, Discover and Stripe.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row g-2">
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <label class="form-label">Card Number</label>
+                          <input type="text" class="form-control" placeholder="1234 4567 6789 4321">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3 mb-lg-0">
+                          <label class="form-label">Name on card</label>
+                          <input type="text" class="form-control" placeholder="Enter your name in card">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="mb-3 mb-lg-0">
+                          <label class="form-label">Expiry date</label>
+                          <input class="form-control" type="text" placeholder="00/00">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="mb-3 mb-lg-0">
+                          <label class="form-label">CVV code</label>
+                          <input type="password" class="form-control" placeholder="***">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card card-bordered shadow-none mb-2">
+                  <!-- card body -->
+                  <div class="card-body p-6">
+                    <div class="d-flex">
+                      <div class="form-check">
+                        <!-- checkbox -->
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="paypal" #paypal
+                          (change)="payPaypal(paypal)">
+                        <label class="form-check-label ms-2" for="paypal"></label>
+                      </div>
+                      <div>
+                        <!-- title -->
+                        <h5 class="mb-1 h6">Payment with Paypal</h5>
+                        <p class="mb-0 small">You will be redirected to PayPal website to
+                          complete your purchase securely.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2 d-flex justify-content-end">
+                  <a href="#" class="btn btn-outline-secondary collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Prev
+                  </a>
+                  <a href="#" class="btn btn-secondary ms-2 collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    Next
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item py-4">
+          <a href="#" class="accordionbutton collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree">
+            <i class="bi bi-info-circle me-2 text-muted"></i>
+            Delivery instructions
+            <!-- collapse -->
+          </a>
+          <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="mt-5">
+              <label for="DeliveryInstructions" class="form-label sr-only">Delivery
+                instructions</label>
+              <textarea [(ngModel)]="DeliveryInstructions" class="form-control" id="DeliveryInstructions" rows="3"
+                placeholder="Write delivery instructions "></textarea>
+              <p class="form-text">Add instructions for how you want your order shopped and/or
+                delivered</p>
+              <div class="mt-2 d-flex justify-content-end">
+                <a href="#" class="btn btn-outline-secondary collapsed" data-bs-toggle="collapse"
+                  data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                  Prev
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" style="display: none;"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- modal body -->
+      <div class="modal-body p-6">
+        <div class="d-flex justify-content-between mb-5">
+          <div>
+            <h5 class="h6 mb-1" id="addAddressModalLabel">New Shipping Address</h5>
+            <p class="small mb-0">Add new shipping address for your order delivery.</p>
+          </div>
+          <div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+        <form [formGroup]="addAddressForm" (ngSubmit)="saveAddress()">
+          <div class="row g-3">
+            <div class="col-12">
+              <input formControlName="phone" type="number" class="form-control"
+                placeholder="Phone Number to deliver the order">
+            </div>
+            <div class="col-12">
+              <select formControlName="country" class="form-control d-block w-100" id="country" required>
+                <option value="" selected>Choose...</option>
+                <option>Cairo</option>
+                <option>Giza</option>
+                <option>Minia</option>
+                <option>Assuit</option>
+                <option>Sohag</option>
+                <option>Quna</option>
+                <option>Luxor</option>
+                <option>Aswan</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <input formControlName="address1" type="text" class="form-control" placeholder="Address Line 1">
+            </div>
+            <div class="col-12">
+              <input formControlName="address2" type="text" class="form-control" placeholder="Address Line 2">
+            </div>
+            <div class="col-12">
+              <input formControlName="markland" type="text" class="form-control" placeholder="Markland">
+            </div>
+            <div class="col-12">
+              <input formControlName="zip" type="text" class="form-control" placeholder="Zip Code">
+            </div>
+            <div class="col-12 text-end">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" data-bs-dismiss="modal" type="submit">Save Address</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,11 +1,55 @@
-<ng-container [ngSwitch]="val">
+<ng-container [ngSwitch]="value">
     <span *ngSwitchCase="0">Not Reviwed Yet</span>
-    <span class="text-warning" *ngSwitchCase="1">*</span>
-    <span class="text-warning" *ngSwitchCase="2">**</span>
-    <span class="text-warning" *ngSwitchCase="3">***</span>
-    <span class="text-warning" *ngSwitchCase="4">****</span>
-    <span class="text-warning" *ngSwitchCase="5">*****</span>
-    <input type="number" #inp (keyup)="input(inp.value)">
+    <span class="d-flex align-items-center" *ngSwitchCase="1">
+        <div class="text-warning  me-1">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+        </div>
+        <span class="review-count">({{count}})</span>
+    </span>
+    <span class="d-flex align-items-center" *ngSwitchCase="2">
+        <div class="text-warning  me-1">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+        </div>
+        <span class="review-count">({{count}})</span>
+    </span>
+    <span class="d-flex align-items-center" *ngSwitchCase="3">
+        <div class="text-warning  me-1">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+            <i class="bi bi-star"></i>
+        </div>
+        <span class="review-count">({{count}})</span>
+    </span>
+    <span class="d-flex align-items-center" *ngSwitchCase="4">
+        <div class="text-warning  me-1">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star"></i>
+        </div>
+        <span class="review-count">({{count}})</span>
+    </span>
+    <span class="d-flex align-items-center" *ngSwitchCase="5">
+        <div class="text-warning  me-1">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+        </div>
+        <span class="review-count">({{count}})</span>
+    </span>
 </ng-container>
 
 <!-- <></> -->

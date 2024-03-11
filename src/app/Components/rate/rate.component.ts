@@ -6,11 +6,6 @@ import { Component, EventEmitter, Input, Output, input } from '@angular/core';
   styleUrl: './rate.component.css'
 })
 export class RateComponent {
-@Input() val:number=0
-@Output() event:EventEmitter<number>= new EventEmitter<number>()
-
-input(value:string){
-  // console.log(value);
-  this.event.emit(parseInt( value))
-}
+  @Input() value: number = 1
+  @Input() count: number = 1
 }

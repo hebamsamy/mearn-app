@@ -1,1 +1,54 @@
-<p>product-details works!</p>
+<div class="py-5">
+    <div id="container">
+        <div class="product-details">
+            <div class="d-flex justify-content-between align-items-center">
+                <button class="custom-btn" (click)="addtocartlist(product)">
+                    <span class="price">{{product.price|currency}}</span>
+                    <span class="shopping-cart"><i class="bi bi-cart-plus" aria-hidden="true"></i></span>
+                    <span class="buy">Buy</span>
+                </button>
+                <button type="button" class="btn" (click)="toggle()">
+                    <span class="text-danger p-1">
+                        <i style="font-size: 25px;" class="text-danger bi"
+                            [ngClass]="{'bi-heart-fill': checkWishItem(),'bi-heart':!checkWishItem()}"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="mt-3"></div>
+            <app-rate></app-rate>
+            <h1>{{product.name}}</h1>
+            <p class="information">" {{product.description}} "</p>
+            <a routerLink="/products/{{product.categoryID?._id}}"
+                class="text-secondary-emphasis p-1 rounded-2 prd-category d-flex justify-content-evenly align-items-center">
+                <span class="d-flex flex-column">
+                    <small class="text-muted text-sm">Category</small>
+                    {{product.categoryID?.name}}
+                </span>
+                <img [title]="product.categoryID?.description" [alt]="product.categoryID?.name"
+                    [src]="product.categoryID?.imgURL" onerror="this.src='../../../assets/placeholder.png'"
+                    class="avatar w-25 avatar-sm rounded-card me-2">
+            </a>
+            <div class="data">
+                <strong>
+                    {{product.quantity}} Item
+                </strong>
+                <span>
+                    available
+                </span>
+            </div>
+            <div class="data">
+                <strong>
+                    Available Colors
+                </strong>
+                <div class="m-3"></div>
+                <div class="row">
+                    <div [style.background]="item" class="border border-1 border-black col-lg-3 col-md-4 col-sm-6 badge"
+                        *ngFor="let item of colors;let i=index">Color {{i+1}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="product-image">
+            <img [src]="product.imgURL" [alt]="product.name" onerror="this.src='../../../assets/placeholder.png'">
+        </div>
+    </div>
+</div>

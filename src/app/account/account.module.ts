@@ -5,14 +5,16 @@ import { LoginComponent } from './Components/login/login.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { routes } from '../app.routes';
+import { UserLayoutComponent } from '../Components/user-layout/user-layout.component';
 
 let accountRoutes:Routes=[
   {path:"login/:returnURL",component: LoginComponent},
   {path:"register",component: RegisterComponent},
-  {path:"profile",component: ProfileComponent},
+  {path:"profile",component: UserLayoutComponent,children:[
+  {path:"",component: ProfileComponent},
+    
+  ]},
 ]
 
 

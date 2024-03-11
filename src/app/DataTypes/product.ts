@@ -1,3 +1,6 @@
+import { ICategory } from "./category";
+import { IStoredUser } from "./user";
+
 export class Product{
     ID:string;
     Name:string;
@@ -18,9 +21,11 @@ export interface IProduct{
     imgURL:string
     price:number
     quantity:number
-    categoryID?:number
+    categoryID?:ICategory
     colors?:string[]
     status?:string
     createdDate?:Date
+    description:string
+    createdBy:IStoredUser
 
 }

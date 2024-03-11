@@ -1,0 +1,84 @@
+<div class="container">
+  <div *ngIf="list.length>0" class="py-4 d-flex justify-content-between align-items-center">
+    <h1 class="position-relative display-3">
+      Shopping Cart
+      <span style="font-size: 15px;"
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+        {{list.length}}
+      </span>
+    </h1>
+    <button class="btn btn-danger" type="button" (click)="empty()">
+      <i class="bi bi-trash3"></i>
+      Empty All Cart
+    </button>
+  </div>
+  <div *ngIf="list.length>0" class="shopping-cart pb-5">
+    <div class="column-labels">
+      <label class="product-image">Image</label>
+      <label class="product-details">Product</label>
+      <label class="product-price">Price</label>
+      <label class="product-quantity">Quantity</label>
+      <label class="product-line-price">Total</label>
+      <label class="product-removal">Remove</label>
+    </div>
+    <div class="product d-flex align-items-center" *ngFor="let item of list">
+      <div class="product-image mx-auto">
+        <a [routerLink]="['/details',item.product._id]">
+          <img class="avatar avatar-xl rounded-2" onerror="this.src='../../../assets/placeholder.png'"
+            [src]="item.product.imgURL">
+        </a>
+      </div>
+      <div class="product-details">
+        <div class="product-title" style="cursor: pointer;" [routerLink]="['/details',item.product._id]">{{item.product.name}}</div>
+        <p class="product-description text-muted">{{item.product.description}}</p>
+      </div>
+      <div class="product-price">{{item.product.price}}</div>
+      <div class="product-quantity d-flex justify-content-center">
+        <!-- (keyup)="edit(item._id,inputValue.value,item.product.quantity)"  -->
+        <input class="border rounded-3 form-control" type="number" #inputValue
+          (change)="edit(item._id,inputValue.value,item.product.quantity)" [value]="item.quantity" min="1"
+          [max]="item.product.quantity">
+      </div>
+      <div class="product-line-price">{{item.quantity*item.product.price}}</div>
+      <div class="product-removal d-flex justify-content-center">
+        <button class="btn btn-danger" (click)="removeFromCart(item._id)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </div>
+    <div class="totals">
+      <!-- <div class="totals-item">
+        <label>Tax (5%)</label>
+        <div class="totals-value" id="cart-tax">3.60</div>
+      </div>
+      <div class="totals-item">
+        <label>Shipping</label>
+        <div class="totals-value" id="cart-shipping">15.00</div>
+      </div> -->
+      <div class="totals-item totals-item-total">
+        <label>Grand Total</label>
+        <div class="totals-value" id="cart-total">{{calcTotal()}}</div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <button class="btn btn-primary" type="button" routerLink="/products">
+        <i class="bi bi-shop"></i>
+        Continue Shopping
+      </button>
+      <button routerLink="/checkout" type="button" class="btn my-2 checkout">Checkout</button>
+    </div>
+  </div>
+  <div *ngIf="list.length<=0" class="text-center pb-5">
+    <img class="w-75" style="height: 400px;" src="../../../assets/empty-cart.png">
+    <h2 class="display-3 text-muted">Your Shopping Cart is Empty!</h2>
+    <p class="lead">
+      You have no items in your shopping cart.
+      <br>
+      Let's Go Buy Something
+    </p>
+    <button class="btn btn-primary" type="button" routerLink="/products">
+      <i class="bi bi-shop"></i>
+      Continue Shopping
+    </button>
+  </div>
+</div>

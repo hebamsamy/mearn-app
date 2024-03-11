@@ -14,13 +14,9 @@ import { Injectable } from "@angular/core";
 export class authGuard implements CanActivate {
   constructor(private authServ: AuthService, private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
-    // console.log("route",route);
-    // console.log("state",state);
-    
     if (this.authServ.GetFromStorage() == null) {
       alert("Sorry you Must Join Us frist :)")
-      this.router.navigate(["/login",state.url])
+      this.router.navigate(["/account/login",state.url])
       return false;
     }
     else{
