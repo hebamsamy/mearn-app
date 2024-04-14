@@ -1,0 +1,35 @@
+<div class="card border bg-white">
+    <!-- Card header -->
+    <div class="card-header bg-transparent border-bottom">
+        <h4 class="display-5">My Orders</h4>
+    </div>
+    <div class="card-body p-0">
+        <ul class="nav nav-bottom-line d-flex justify-content-center align-items-center">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0" [routerLink]="['/account/my-order/pending']" routerLinkActive="active">
+                    <i class="bi bi-clock fa-fw me-1"></i>Pending
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0" [routerLink]="['/account/my-order/no-the-way']" routerLinkActive="active">
+                    <i class="bi bi-rocket-takeoff fa-fw me-1"></i>On The Way
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0" [routerLink]="['/account/my-order/cancelled']" routerLinkActive="active">
+                    <i class="bi bi-x-octagon fa-fw me-1"></i>Canceled
+                </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0" [routerLink]="['/account/my-order/completed']" routerLinkActive="active">
+                    <i class="bi bi-patch-check fa-fw me-1"></i>Completed
+                </a>
+            </li>
+        </ul>
+
+        <div class="p-2 p-sm-4">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+</div>

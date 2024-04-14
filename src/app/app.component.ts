@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Product } from './DataTypes/product';
-import { ProductListService } from './Services/product-list.service';
-import { MoneyPipe } from './pipes/money.pipe';
 import { LoaderService } from './Services/loader.service';
 import { BehaviorSubject } from 'rxjs';
 

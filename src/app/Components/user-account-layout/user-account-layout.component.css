@@ -1,0 +1,12 @@
+.nav-link{
+    color: gray;
+    transition: 1s transform ease-in-out;
+}
+.nav-link:hover{
+    color: black;
+    transform: scale(1.1);
+}
+.active{
+    color: black;
+    transform: scale(1.1);
+}

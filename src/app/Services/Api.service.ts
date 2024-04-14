@@ -38,11 +38,5 @@ export class ApiService {
     return this.Http.get<APIResult<any>>(this.OriginalPath + "/product/vendor/" + id)
   }
 
-  Register(User: IRegisterUser) {
-    return this.Http.post<APIResult<any>>(this.OriginalPath + "/user/register", User)
-  }
 
-  Login(User: ILoginUser) {
-    return this.Http.post<APIResult<any>>(this.OriginalPath + "/user/login", User)
-  }
 }

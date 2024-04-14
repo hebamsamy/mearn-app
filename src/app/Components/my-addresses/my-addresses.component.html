@@ -1,0 +1,90 @@
+<div class="mt-5">
+  <div class="d-flex justify-content-between mb-6">
+    <!-- heading -->
+    <h2 class="mb-0">Address</h2>
+    <!-- button -->
+    <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">Add a new address</a>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-12 mb-4" *ngFor="let item of currentAddresses">
+      <div class="card card-body"
+        [ngClass]="{'border border-primary border-3': item.isDefault}">
+        <address>
+          <strong>{{item.phoneNumber}}</strong>
+          <div *ngIf="item != null">
+            {{item.city}},
+            <br>
+            {{item.address1}}, {{item.address2}}
+          </div>
+          <p class="mb-0">{{item.markland}}</p>
+        </address>
+        <div class="d-flex">
+          <button [ngClass]="{'d-none': item.isDefault}" class="btn text-success" (click)="MakeDefaultAddress(item._id)">Set as Default</button>
+          <button class="btn text-primary" (click)="edit(item)" data-bs-toggle="modal" data-bs-target="#addAddressModal">Edit</button>
+          <button class="btn text-danger" (click)="delete(item._id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" style="display: none;"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- modal body -->
+      <div class="modal-body p-6">
+        <div class="d-flex justify-content-between mb-5">
+          <div>
+            <h5 class="h6 mb-1" id="addAddressModalLabel">New Shipping Address</h5>
+            <p class="small mb-0">Add new shipping address for your order delivery.</p>
+          </div>
+          <div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+        <form [formGroup]="addAddressForm" (ngSubmit)="saveAddress()">
+          <div class="row g-3">
+            <div class="col-12">
+              <input formControlName="phoneNumber" type="text" class="form-control"
+                placeholder="Phone Number to deliver the order">
+            </div>
+            <div class="col-12">
+              <select formControlName="city" class="form-control d-block w-100" id="country" required>
+                <option value="" selected>Choose...</option>
+                <option>Cairo</option>
+                <option>Giza</option>
+                <option>Minia</option>
+                <option>Assuit</option>
+                <option>Sohag</option>
+                <option>Quna</option>
+                <option>Luxor</option>
+                <option>Aswan</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <input formControlName="address1" type="text" class="form-control" placeholder="Address Line 1">
+            </div>
+            <div class="col-12">
+              <input formControlName="address2" type="text" class="form-control" placeholder="Address Line 2">
+            </div>
+            <div class="col-12">
+              <input formControlName="markland" type="text" class="form-control" placeholder="Markland">
+            </div>
+            <div class="col-12">
+              <input formControlName="zip" type="text" class="form-control" placeholder="Zip Code">
+            </div>
+            <div class="col-12 text-end">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" data-bs-dismiss="modal" type="submit">Save Address</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

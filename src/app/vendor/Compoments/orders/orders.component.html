@@ -1,0 +1,59 @@
+<div class="card shadow border-0 mb-7 ">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+    <h5 class="m-6">My Orders List</h5>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover table-nowrap">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Image</th>
+          <th scope="col">Product</th>
+          <th scope="col">Data & Time</th>
+          <th scope="col">Payment</th>
+          <th scope="col">Status</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of list" style="vertical-align: middle !important;">
+          <td>
+            <img [title]="item.productItem.product.name" [alt]="item.productItem.product.name"
+              [src]="item.productItem.product.imgURL" class="avatar avatar-sm rounded-circle me-2">
+          </td>
+          <td class="text-heading font-semibold">
+            {{item.productItem.product.name}}
+          </td>
+          <td>
+            {{item.orderDate|date}}
+          </td>
+          <td>
+            {{item.paymentMethod}}
+          </td>
+          <td>
+            <span *ngIf="item.productItem.status == 'pending'" class="badge bg-soft-warning text-dark ms-2">Pending</span>
+            <span *ngIf="item.productItem.status == 'rejected'" class="badge bg-danger text-light ms-2">Rejected</span>
+            <span *ngIf="item.productItem.status == 'accepted'" class="badge bg-success text-light ms-2">Accepted</span>
+          
+          </td>
+          <td>
+            {{item.productItem.quantity}}
+          </td>
+          <td>
+            {{item.productItem.supPrice | currency}}
+          </td>
+          <td class="text-end">
+            <a title="View Order Details" routerLink="/vendor/view-order/{{item.orderId}}"
+              class="btn btn-neutral border-base btn-outline-primary" style="font-size: 12px;">
+              Order#{{item.orderId}}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer bg-white border-0 py-5">
+    <span class="text-muted text-sm">Showing {{list.length}} items of results found</span>
+  </div>
+</div>

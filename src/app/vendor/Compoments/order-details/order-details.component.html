@@ -1,0 +1,188 @@
+<main class="main-content-wrapper">
+  <!-- container -->
+  <div class="container" *ngIf="order != null">
+    <!-- row -->
+    <div class="row mb-8">
+      <div class="col-md-12">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+          <div>
+            <h2>Order Details</h2>
+          </div>
+          <div>
+            <a routerLink="/vendor/orders" class="btn btn-primary">Back to all orders</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+      <div class="col-xl-12 col-12 mb-5">
+        <!-- card -->
+        <div class="card h-100 card-lg">
+          <div class="card-body p-6">
+            <div class="d-md-flex justify-content-between">
+              <div class="d-flex align-items-center mb-2 mb-md-0">
+                <p class="mb-0 text-bold">Order Status : </p>
+                <span *ngIf="order.status == 'pending'" class="badge bg-soft-warning text-dark ms-2">Pending</span>
+                <span *ngIf="order.status == 'preparing'" class="badge bg-soft-info text-dark ms-2">Preparing</span>
+                <span *ngIf="order.status == 'ondelivery'" class="badge bg-primary text-light ms-2">On the Way</span>
+                <span *ngIf="order.status == 'canceled'" class="badge bg-danger text-light ms-2">Canceled</span>
+                <span *ngIf="order.status == 'completed'" class="badge bg-success text-light ms-2">Completed</span>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-12">
+                  <h6>Customer Details</h6>
+                  <div class="ms-auto">
+                    <div class="avatar mb-3">
+                      <img class="avatar-img rounded-2 shadow w-100 h-100" [src]="order.createdBy.imgURL" alt="avatar">
+                    </div>
+                    <p class="h6 mt-2 mt-sm-0 mb-2">{{order.createdBy.name}}</p>
+                    <p class="small mb-2">{{order.createdBy.email}}</p>
+                    <p class="small mb-2">{{order.createdBy.phoneNumber}}</p>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                  <div class="mb-6">
+                    <h6>Shipping Address</h6>
+                    <p class="mb-1 lh-lg text-muted">
+                      {{order.address.city}}
+                      <br>
+                      {{order.address.address1}}
+                      <br>
+                      {{order.address.address1}}
+                      <br>
+                      {{order.address.markland}}
+                      <br>
+                      Contact No. {{order.address.phoneNumber}}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12">
+                  <div class="mb-6">
+                    <h6>Order Details</h6>
+                    <p class="mb-1 lh-lg text-muted">
+                      ID:
+                      <span class="text-dark">{{order._id}}</span>
+                      <br>
+                      Date:
+                      <span class="text-dark">{{order.orderDate |date}}</span>
+                      <br>
+                      Deliver At:
+                      <span class="text-dark">{{order.deliverDate |date}}</span>
+                      <br>
+                      Total:
+                      <span class="text-dark">{{mytotal() |currency}}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive">
+                <!-- Table -->
+                <table class="table mb-0 text-nowrap table-centered">
+                  <!-- Table Head -->
+                  <thead class="bg-light">
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Quantity</th>
+                      <th>Sup Total</th>
+                      <th>Item Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <!-- tbody -->
+                  <tbody>
+                    <tr *ngFor="let item of order.productlist" style="vertical-align: middle;">
+                      <td>
+                        <a [routerLink]="['/vendor/view-product/', item.product._id]"
+                          class="text-inherit text-decoration-none">
+                          <div class="d-flex align-items-center">
+                            <div>
+                              <img [src]="item.product.imgURL" alt="" class="icon-shape icon-lg">
+                            </div>
+                            <div class="ms-lg-4 mt-2 mt-lg-0">
+                              <h5 class="mb-0 h6 text-dark text-muted-hover">{{item.product.name}}</h5>
+                            </div>
+                          </div>
+                        </a>
+                      </td>
+                      <td class="text-muted">{{item.product.price|currency}}</td>
+                      <td class="text-muted">{{item.quantity}}</td>
+                      <td class="text-muted">{{item.supPrice|currency}}</td>
+                      <td>
+                        <span *ngIf="item.status == 'pending'" class="badge bg-soft-warning text-dark ms-2">Pending</span>
+                        <span *ngIf="item.status == 'rejected'" class="badge bg-danger text-light ms-2">Rejected</span>
+                        <span *ngIf="item.status == 'accepted'" class="badge bg-success text-light ms-2">Accepted</span>
+                      </td>
+                      <td>
+                        <button class="btn btn-outline-success d-inline-flex btn-neutral border-base mx-1"
+                          *ngIf="item.status == 'rejected' || item.status == 'pending'"
+                          (click)="changeStatus(item.product._id,'accepted')">
+                          <span>
+                            <i class="bi bi-check"></i>
+                          </span>
+                        </button>
+                        <button class="btn btn-outline-danger d-inline-flex btn-neutral border-base mx-1"
+                          *ngIf="item.status == 'accepted' || item.status == 'pending'"
+                          (click)="changeStatus(item.product._id,'rejected')">
+                          <span>
+                            <i class="bi bi-x"></i>
+                          </span>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="border-bottom-0 pb-0"></td>
+                      <td class="border-bottom-0 pb-0"></td>
+                      <td colspan="1" class="fw-medium text-dark">
+                      </td>
+                      <td class="fw-medium text-dark">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td colspan="1" class="fw-semibold text-dark">
+                        Grand Total
+                      </td>
+                      <td class="fw-semibold text-dark">
+                        {{mytotal()|currency}}
+                      </td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-6">
+            <div class="row">
+              <div class="col-md-6 mb-4 mb-lg-0">
+                <h6>Payment Info</h6>
+                <span *ngIf="order.paymentMethod == 'cash'" class="text-muted">Cash on Delivery</span>
+              </div>
+              <div class="col-md-6 mb-4 mb-lg-0">
+                <h6>Delivery Instructions</h6>
+                <span class="text-muted">{{order.deliveryInstructions}}</span>
+              </div>
+              <div class="col-md-6" *ngIf="isvaildtoedit()">
+                <h5>Any Other Notes</h5>
+                <textarea class="form-control mb-3" rows="3" placeholder="Write note for order"
+                  [(ngModel)]="Notes"></textarea>
+                <button class="btn btn-primary" (click)="saveNotes()">Save Notes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

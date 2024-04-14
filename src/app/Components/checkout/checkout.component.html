@@ -51,7 +51,7 @@
       </div>
       <hr class="mb-3">
       <div class="d-flex justify-content-center align-items-center">
-        <button class="btn btn-primary btn-lg btn-block mb-4" type="submit">Make an Order</button>
+        <button class="btn btn-primary btn-lg btn-block mb-4" type="button" (click)="makeOrder()">Make an Order</button>
       </div>
     </div>
     <div class="col-md-6 order-md-1">
@@ -62,8 +62,10 @@
             <!-- heading one -->
             <a href="#" class="accordionbutton" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
               aria-expanded="true" aria-controls="flush-collapseOne">
-              <i class=" bi bi-pin-fill me-2 text-muted"></i>
-              Add delivery address
+              <div>
+                <i class=" bi bi-pin-fill me-2 text-muted"></i>Add delivery address
+              </div>
+              <small style="font-size: 12px;" class="text-muted p-2">You must choose Order Address</small>
             </a>
             <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addAddressModal">
               Add a new address</a>
@@ -71,39 +73,21 @@
           <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
             <div class="mt-5">
               <div class="row">
-                <div class="col-lg-6 col-12 mb-4">
-                  <!-- form -->
-                  <div class="card card-body p-6">
-                    <address>
-                      <strong>{{currentUser?.email}}</strong>
-                      <div *ngIf="currentAddress != null">
-                        {{currentAddress.country}},
-                        <br>
-                        {{currentAddress.address1}}, {{currentAddress.address2}}
-                      </div>
-                      <p class="mb-0" title="Phone">{{currentUser?.phoneNumber}}</p>
-                    </address>
-                    <span class="text-primary">Default address</span>
-                  </div>
-                </div>
-                <div *ngIf="false" class="col-lg-6 col-12 mb-4">
-                  <!-- input -->
-                  <div class="card card-body p-6">
-                    <div class="form-check mb-4">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="officeRadio">
-                      <label class="form-check-label text-dark" for="officeRadio">Office</label>
-                    </div>
-                    <address>
-                      <strong>Nitu Chauhan</strong>
-                      <br>
-                      3853 Coal Road,
-                      <br>
-                      Tannersville, Pennsylvania, 18372, USA,
-                      <br>
-
-                      <abbr title="Phone">P: 402-776-1106</abbr>
-                    </address>
-                  </div>
+                <div class="col-lg-6 col-12 mb-4" *ngFor="let item of currentAddresses">
+                  <button class="btn card card-body" (click)="chooseAddress(item._id)"
+                  [ngClass]="{'border border-primary border-3': item._id == address}">  
+                      <address>
+                        <strong>{{item.phoneNumber}}</strong>
+                        <div *ngIf="item != null">
+                          {{item.city}},
+                          <br>
+                          {{item.address1}}, {{item.address2}}
+                        </div>
+                        <p class="mb-0">{{item.markland}}</p>
+                      </address>
+                      <span *ngIf="item.isDefault" class="text-primary">Default address</span>
+                    
+                  </button>             
                 </div>
                 <div class="mt-2 d-flex justify-content-end">
                   <a href="#" class="btn btn-secondary ms-2 collapsed" data-bs-toggle="collapse"
@@ -226,7 +210,7 @@
             <div class="mt-5">
               <label for="DeliveryInstructions" class="form-label sr-only">Delivery
                 instructions</label>
-              <textarea [(ngModel)]="DeliveryInstructions" class="form-control" id="DeliveryInstructions" rows="3"
+              <textarea [(ngModel)]="deliveryInstructions" class="form-control" id="DeliveryInstructions" rows="3"
                 placeholder="Write delivery instructions "></textarea>
               <p class="form-text">Add instructions for how you want your order shopped and/or
                 delivered</p>
@@ -264,11 +248,11 @@
         <form [formGroup]="addAddressForm" (ngSubmit)="saveAddress()">
           <div class="row g-3">
             <div class="col-12">
-              <input formControlName="phone" type="number" class="form-control"
+              <input formControlName="phoneNumber" type="text" class="form-control"
                 placeholder="Phone Number to deliver the order">
             </div>
             <div class="col-12">
-              <select formControlName="country" class="form-control d-block w-100" id="country" required>
+              <select formControlName="city" class="form-control d-block w-100" id="country" required>
                 <option value="" selected>Choose...</option>
                 <option>Cairo</option>
                 <option>Giza</option>

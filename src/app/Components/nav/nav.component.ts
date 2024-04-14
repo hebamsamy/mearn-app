@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ProductListService } from '../../Services/product-list.service';
 import { CartListService } from '../../Services/cart-list.service';
 import { IStoredUser } from '../../DataTypes/user';
 import { AuthService } from '../../Services/auth.service';

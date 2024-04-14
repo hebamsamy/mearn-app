@@ -1,0 +1,191 @@
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    background: #EBF0F5;
+    height: 100vh;
+    text-align: center;
+}
+
+h1 {
+    color: #0094ff;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #404F5E;
+    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+    font-size: 20px;
+    margin: 0;
+}
+
+i {
+    color: #9ABC66;
+    font-size: 100px;
+    line-height: 200px;
+    margin-left: -15px;
+}
+
+.card {
+    background: white;
+    padding: 60px;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px #C8D0D8;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+
+.star {
+    position: absolute;
+    animation: grow 3s infinite;
+    fill: #0094ff;
+    opacity: 0;
+}
+
+.star:nth-child(1) {
+    width: 12px;
+    height: 12px;
+    left: 12px;
+    top: 16px;
+}
+
+.star:nth-child(2) {
+    width: 18px;
+    height: 18px;
+    left: 168px;
+    top: 84px;
+}
+
+.star:nth-child(3) {
+    width: 10px;
+    height: 10px;
+    left: 32px;
+    top: 162px;
+}
+
+.star:nth-child(4) {
+    width: 20px;
+    height: 20px;
+    left: 82px;
+    top: -12px;
+}
+
+.star:nth-child(5) {
+    width: 14px;
+    height: 14px;
+    left: 125px;
+    top: 162px;
+}
+
+.star:nth-child(6) {
+    width: 10px;
+    height: 10px;
+    left: 16px;
+    top: 16px;
+}
+
+.star:nth-child(1) {
+    animation-delay: 0.5s;
+}
+
+.star:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.star:nth-child(3) {
+    animation-delay: 3.5s;
+}
+
+.star:nth-child(4) {
+    animation-delay: 5s;
+}
+
+.star:nth-child(5) {
+    animation-delay: 6.5s;
+}
+
+.star:nth-child(6) {
+    animation-delay: 8s;
+}
+
+.checkmark {
+    position: relative;
+    padding: 30px;
+    animation: checkmark 5m cubic-bezier(0.420, 0.000, 0.275, 1.155) both;
+}
+
+.checkmark__check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    transform: translate3d(-50%, -50%, 0);
+    fill: white
+}
+
+.checkmark__background {
+    fill:#0094ff;
+    animation: rotate 20s linear both infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes grow {
+
+    0%,
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes checkmark {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    10%,
+    50%,
+    90% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.btn{
+    color: white !important;
+    background-color: #0094ff !important;
+    margin: 30px 0;
+}
+.homey{
+    background-color: white !important;
+    color: #0094ff !important;
+    border-color: #0094ff !important;
+    margin: 30px 10px; 
+}

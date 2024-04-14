@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IStoredUser } from '../DataTypes/user';
+import { ILoginUser, IRegisterUser, IStoredUser } from '../DataTypes/user';
+import { HttpClient } from '@angular/common/http';
+import { APIResult } from '../DataTypes/apiResault';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +11,19 @@ export class AuthService {
   UserSubject: BehaviorSubject<IStoredUser|null>
 
 
-  constructor() {
+  OriginalPath = "http://localhost:5000"
+  constructor(private http: HttpClient) { 
     this.UserSubject = new BehaviorSubject<IStoredUser|null>(this.GetFromStorage())
+  }
+  Register(User: IRegisterUser) {
+    return this.http.post<APIResult<any>>(this.OriginalPath + "/user/register", User)
+  }
+
+  Login(User: ILoginUser) {
+    return this.http.post<APIResult<any>>(this.OriginalPath + "/user/login", User)
+  }
+  Update(data:FormData){
+    return this.http.put<APIResult<any>>(this.OriginalPath + "/user/update",data)
   }
   GetFromStorage(): IStoredUser|null {
    let str = localStorage.getItem("user")

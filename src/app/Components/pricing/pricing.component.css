@@ -1,0 +1,16 @@
+@import url("https://preview.keenthemes.com/metronic8/demo1/assets/css/style.bundle.css");
+.svg-icon-success{
+    color: green !important;
+}
+.text-gray-400{
+    color: lightgray !important;
+}
+.svg-icon-danger{
+    color: lightcoral;
+}
+.text-primary{
+    color: #1b84ff !important;
+}
+.btn-primary{
+    color: white;
+}

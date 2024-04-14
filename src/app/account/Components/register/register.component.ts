@@ -4,6 +4,8 @@ import { IRegisterUser } from '../../../DataTypes/user';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { authGuard } from '../../../Services/Guards/auth.guard';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +16,7 @@ export class RegisterComponent {
 user:IRegisterUser;
 form:FormGroup;
 constructor(
-  private AuthApiServ:ApiService,
+  private AuthApiServ:AuthService,
   private router:Router,private toastrServ:ToastrService,
   private bulder:FormBuilder){
   this.user =  {

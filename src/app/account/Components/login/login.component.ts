@@ -20,7 +20,6 @@ export class LoginComponent {
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private apiServ: ApiService,
     private authServ: AuthService,
     private cartServ: CartListService,
     private wishServ: WishListService,
@@ -36,7 +35,7 @@ export class LoginComponent {
   }
   Send() {
     this.user = this.form.value as ILoginUser;    
-    this.apiServ.Login(this.user).subscribe({
+    this.authServ.Login(this.user).subscribe({
       next: (responce) => {
         if (responce.success) {
           this.toastrServ.success(responce.message,"Login Successfully")
@@ -47,6 +46,9 @@ export class LoginComponent {
             phoneNumber: responce.data.user.phoneNumber,
             role: responce.data.user.role,
             _id: responce.data.user._id,
+            gender:responce.data.user.gender,
+            birthDate:responce.data.user.birthDate,
+            imgURL:responce.data.user.imgURL
           }
           this.authServ.newUserLoggedIn(data)
           this.call()

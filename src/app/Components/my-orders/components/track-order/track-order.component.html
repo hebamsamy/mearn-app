@@ -1,0 +1,175 @@
+<main class="main-content-wrapper">
+   <!-- container -->
+   <div class="container" *ngIf="order != null">
+      <!-- row -->
+      <div class="row mb-8">
+         <div class="col-md-12">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-4">
+               <div>
+                  <h2>Order Details</h2>
+               </div>
+               <div>
+                  <a routerLink="/account/my-order/pending" class="btn btn-primary">Back to all orders</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- row -->
+      <div class="row">
+         <div class="col-xl-12 col-12 mb-5">
+            <!-- card -->
+            <div class="card h-100 card-lg">
+               <div class="card-body p-6">
+                  <div class="d-md-flex justify-content-between">
+                     <div class="d-flex align-items-center mb-2 mb-md-0">
+                        <p class="mb-0 text-bold">Order Status : </p>
+                        <span *ngIf="order.status == 'pending'"
+                           class="badge bg-soft-warning text-dark ms-2">Pending</span>
+                        <span *ngIf="order.status == 'preparing'"
+                           class="badge bg-soft-info text-dark ms-2">Preparing</span>
+                        <span *ngIf="order.status == 'ondelivery'" class="badge bg-primary text-light ms-2">On the
+                           Way</span>
+                        <span *ngIf="order.status == 'canceled'" class="badge bg-danger text-light ms-2">Canceled</span>
+                        <span *ngIf="order.status == 'completed'"
+                           class="badge bg-success text-light ms-2">Completed</span>
+                     </div>
+                     <button *ngIf="isvaildtoedit()" class="btn btn-danger" (click)="cancelOrder()">Cancel
+                        Order</button>
+                     <!-- to do status -->
+                  </div>
+                  <div class="mt-8">
+                     <div class="row">
+                        <!-- address -->
+                        <div class="col-lg-6 col-md-6 col-12">
+                           <div class="mb-6">
+                              <h6>Shipping Address</h6>
+                              <p class="mb-1 lh-lg text-muted">
+                                 {{order.address.city}}
+                                 <br>
+                                 {{order.address.address1}}
+                                 <br>
+                                 {{order.address.address1}}
+                                 <br>
+                                 {{order.address.markland}}
+                                 <br>
+                                 Contact No. {{order.address.phoneNumber}}
+                              </p>
+                           </div>
+                        </div>
+                        <!-- address -->
+                        <div class="col-lg-6 col-md-6 col-12">
+                           <div class="mb-6">
+                              <h6>Order Details</h6>
+                              <p class="mb-1 lh-lg text-muted">
+                                 Order ID:
+                                 <span class="text-dark">{{order._id}}</span>
+                                 <br>
+                                 Order Date:
+                                 <span class="text-dark">{{order.orderDate}}</span>
+                                 <br>
+                                 Order Total:
+                                 <span class="text-dark">{{order.totalPrice |currency}}</span>
+                              </p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <div class="table-responsive">
+                        <!-- Table -->
+                        <table class="table mb-0 text-nowrap table-centered">
+                           <!-- Table Head -->
+                           <thead class="bg-light">
+                              <tr>
+                                 <th>Products</th>
+                                 <th>Price</th>
+                                 <th>Quantity</th>
+                                 <th>Total</th>
+                                 <th>Status</th>
+                              </tr>
+                           </thead>
+                           <!-- tbody -->
+                           <tbody>
+                              <tr *ngFor="let item of order.productlist" class="">
+                                 <td>
+                                    <a [routerLink]="['/details/', item.product._id]"
+                                       class="text-inherit text-decoration-none">
+                                       <div class="d-flex align-items-center">
+                                          <div>
+                                             <img [src]="item.product.imgURL" alt="" class="icon-shape icon-lg">
+                                          </div>
+                                          <div class="ms-lg-4 mt-2 mt-lg-0">
+                                             <h5 class="mb-0 h6 text-dark text-muted-hover">{{item.product.name}}</h5>
+                                          </div>
+                                       </div>
+                                    </a>
+                                 </td>
+                                 <td class="text-muted">{{item.product.price|currency}}</td>
+                                 <td class="text-muted">{{item.quantity}}</td>
+                                 <td class="text-muted">{{item.supPrice|currency}}</td>
+                                 <td>
+                                    <span *ngIf="item.status == 'pending'"
+                                       class="badge bg-soft-warning text-dark ms-2">Pending</span>
+                                    <span *ngIf="item.status == 'rejected'"
+                                       class="badge bg-danger text-light ms-2">Rejected</span>
+                                    <span *ngIf="item.status == 'accepted'"
+                                       class="badge bg-success text-light ms-2">Accepted</span>
+                                 </td>
+                              </tr>
+                              
+                              <tr>
+                                 <td class="border-bottom-0 pb-0"></td>
+                                 <td class="border-bottom-0 pb-0"></td>
+                                 <td colspan="1" class="fw-medium text-dark">
+                                    Shipping Cost
+                                 </td>
+                                 <td class="fw-medium text-dark">
+                                    $10.00
+                                 </td>
+                                 <td></td>
+                              </tr>
+
+                              <tr>
+                                 <td></td>
+                                 <td></td>
+                                 <td colspan="1" class="fw-semibold text-dark">
+                                    Grand Total
+                                 </td>
+                                 <td class="fw-semibold text-dark">
+                                    {{order.totalPrice|currency}}
+                                 </td>
+                                 <td></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-body p-6">
+                  <div class="row">
+                     <div class="col-md-6 mb-4 mb-lg-0">
+                        <h6>Payment Info</h6>
+                        <span *ngIf="order.paymentMethod == 'cash'" class="text-muted">Cash on Delivery</span>
+                     </div>
+                     <div class="col-md-6 mb-4 mb-lg-0">
+                        <h6>Delivery Instructions</h6>
+                        <span class="text-muted">{{order.deliveryInstructions}}</span>
+                     </div>
+                     <div class="col-md-6" *ngIf="isvaildtoedit()">
+                        <h5>Any Other Notes</h5>
+                        <textarea class="form-control mb-3" rows="3" placeholder="Write note for order"
+                           [(ngModel)]="Notes"></textarea>
+                        <button class="btn btn-primary" (click)="saveNotes()">Save Notes</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div *ngIf="order == null">
+      <app-not-found></app-not-found>
+   </div>
+</main>

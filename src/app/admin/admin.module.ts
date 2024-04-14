@@ -8,12 +8,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { routes } from '../app.routes';
+import { AddCategoryComponent } from './components/Add-Category/Add-Category.component';
+import { VendorsComponent } from './components/vendors/vendors.component';
 
 let AdminRoutes:Routes=[
   {path:"",redirectTo:"/admin/home",pathMatch:"full"},
   {path:"home",component:HomeComponent},
   {path:"users",component:UsersComponent},
+  {path:"vendors",component:VendorsComponent},
   {path:"products",component:ProductsComponent},
+  {path:"add-category",component:AddCategoryComponent},
 ]
 
 
@@ -22,7 +26,9 @@ let AdminRoutes:Routes=[
     ProductsComponent,
     UsersComponent,
     HomeComponent,
-    LayoutComponent
+    LayoutComponent,
+    AddCategoryComponent,
+    VendorsComponent
   ],
   imports: [
     CommonModule,
